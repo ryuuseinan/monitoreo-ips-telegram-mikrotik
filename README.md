@@ -24,7 +24,7 @@ Este tutorial detalla cómo configurar una dirección IP en un MikroTik recién 
 1. En el menú principal, ve a **IP > Addresses**.
 2. Haz clic en el botón **+** para agregar una nueva dirección.
 3. Configura los siguientes campos:
-   - **Address**: `192.168.1.2/24` *(ajústalo a la red de tu gateway, si es diferente)*.
+   - **Address**: `192.168.1.2/24` *(ajústalo a la red de tu gateway, si es diferente, en mi caso usé 192.168.1.28/24)*.
    - **Interface**: Selecciona la interfaz conectada, por ejemplo, `ether1`.
 4. Haz clic en **OK** para guardar.
 
