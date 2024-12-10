@@ -73,3 +73,41 @@ Para asegurar que la configuración persista tras un reinicio:
 1. Guarda una copia del respaldo:
    ```bash
    /system backup save name=initial_config
+
+# Enviar Mensajes a Telegram desde MikroTik
+
+Este proyecto describe cómo configurar un script en MikroTik para enviar mensajes a un chat de Telegram utilizando la API de Telegram.
+
+## Requisitos
+
+- Un router MikroTik con acceso a la terminal o Winbox.
+- Un bot de Telegram creado con [BotFather](https://core.telegram.org/bots#botfather).
+- El `BotToken` y el `ChatID` del chat al que se enviarán los mensajes.
+
+## Pasos para configurar el script
+
+### 1. Crear un bot de Telegram
+1. Abre Telegram y busca el usuario `@BotFather`.
+2. Inicia una conversación con él y usa el comando `/newbot` para crear un nuevo bot.
+3. Anota el `BotToken` que te proporciona BotFather, ya que lo necesitarás en el script.
+
+### 2. Obtener el `ChatID`
+Para obtener el `ChatID` de tu chat en Telegram, sigue estos pasos:
+1. En Telegram, abre el siguiente enlace en tu navegador (reemplaza `BotToken` por el que te dio BotFather): https://api.telegram.org/bot<BotToken>/getUpdates
+2. Esto devolverá una respuesta JSON con información sobre los mensajes enviados al bot. Busca el campo `"chat": {"id": <ChatID>}` y copia el `ChatID`.
+
+### 3. Configurar el script en MikroTik
+1. Accede a la terminal de MikroTik, ya sea mediante Winbox o SSH.
+2. Crea un nuevo script con el siguiente comando:
+
+```bash
+/system script add name=SendTelegramMessage source={
+  :local BotToken "7832338145:AAEYKke8t74yIE5MezxKYgxTF4bl-MYV14s"
+  :local ChatID "796083508"
+  :local Message "Mensaje de prueba desde MikroTik"
+  /tool fetch url=("https://api.telegram.org/bot" . $BotToken . "/sendMessage%3Fchat_id=" . $ChatID . "&text=" . $Message) keep-result=no
+}
+```
+### 4. Ejecutar el script
+1. Para ejecutar el script simplemente abre una terminal y escribe `/system script run SendTelegramMessage`
+
