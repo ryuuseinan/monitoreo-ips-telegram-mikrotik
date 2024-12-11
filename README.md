@@ -1,6 +1,6 @@
 # Monitoreo de IPs de firewall de router Mikrotik con integración de Bot de Telegram
 
-# Configuración Inicial de MikroTik después de una Instalación Nueva
+## Configuración Inicial de MikroTik después de una Instalación Nueva
 
 Este tutorial detalla cómo configurar una dirección IP en un MikroTik recién instalado, solucionar problemas de conectividad y habilitar acceso a internet. Ideal para casos donde WinBox muestra la IP como `0.0.0.0`.
 
