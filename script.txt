@@ -6,6 +6,9 @@
 # Almacenar el estado previo de las IPs
 :local prevSet "";
 
+# Variable de control para evitar enviar notificaciones en la primera iteración
+:local isFirstIteration true;
+
 # Definir los emojis
 :local clipboardEmoji "\F0\9F\93\8B";   # ?? (Unicode: U+1F4CB)
 :local redCircleEmoji "\E2\AD\95";      # ? (Unicode: U+2B55)
@@ -56,8 +59,8 @@
         }
     }
 
-    # Enviar mensaje con los cambios si los hay
-    :if ($prevSet != $currSet) do={
+    # Enviar mensaje con los cambios si no es la primera iteración
+    :if (!$isFirstIteration) do={
         # Enviar mensaje indicando si se añadieron IPs
         :if ([:len $addedIPs] > 0) do={
             :local addedMessage ("$redCircleEmoji IPs agregadas a la lista $monitoredList:%0A" . $addedIPs);
@@ -71,10 +74,13 @@
             /tool fetch url=("https://api.telegram.org/bot" . $BotToken . "/sendMessage?chat_id=" . $ChatID . "&text=" . $removedMessage) keep-result=no;
             :log info "Mensaje enviado a Telegram: $removedMessage";
         }
-
-        # Actualizar la lista previa
-        :set prevSet $currSet;
     }
+
+    # Actualizar la lista previa
+    :set prevSet $currSet;
+
+    # Marcar que ya no es la primera iteración
+    :set isFirstIteration false;
 
     # Esperar 5 segundos antes de verificar nuevamente
     :delay 5s;
