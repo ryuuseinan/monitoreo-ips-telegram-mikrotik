@@ -115,7 +115,7 @@ Para obtener el `ChatID` de tu chat en Telegram, sigue estos pasos:
 - Para eliminar `/ip firewall address-list remove [find list=BlackList address=192.168.1.15]`
 3. Una vez enviado uno de estos dos comandos, llegará una notificación a Telegram con el mensaje correspondiente.
 
-### 5. Para configurar el script del repositorio, se debe considerar lo siguiente:
+### 5. Para configurar el script del repositorio, se debe configurar las siguientes variables:
 - BotToken: se le coloca el token del bot de Telegram
 - ChatID: se le coloca el ID del chat donde serán recibidos los mensajes del Bot
 - monitoredList: se le asigna la lista a monitorear, por defecto está como "BlackList"
