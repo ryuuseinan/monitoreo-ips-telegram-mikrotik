@@ -6,8 +6,8 @@ Este tutorial detalla cómo configurar una dirección IP en un MikroTik recién 
 
 ## Requisitos
 - **WinBox** instalado en tu computadora.
-- Acceso físico de red o desde una máquina virtual al dispositivo MikroTik.
-
+- Acceso físico de red al dispositivo MikroTik o tener instalado una máquina virtual.
+- En caso de contar con una máquina virtual, haber instalado RouterOS en esta.
 ---
 
 ## Paso 1: Conectarse a MikroTik desde WinBox por MAC Address
