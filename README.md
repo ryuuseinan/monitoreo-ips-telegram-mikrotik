@@ -110,4 +110,7 @@ Para obtener el `ChatID` de tu chat en Telegram, sigue estos pasos:
 ```
 ### 4. Ejecutar el script
 1. Para ejecutar el script simplemente abre una terminal y escribe `/system script run script`
-2. Para agregar una IP al firewall, abre una terminar y escribe `/ip firewall address-list add list=BlackList address=192.168.1.15` y para eliminar `/ip firewall address-list remove [find list=BlackList address=192.168.1.15]`, una vez enviado uno de estos dos comandos, llegará una notificación a Telegram con el mensaje correspondiente.
+2. Para probar la solución se deben eliminar o agregar IPs.
+- Para agregar abre una terminar y escribe `/ip firewall address-list add list=BlackList address=192.168.1.15`
+- Para eliminar `/ip firewall address-list remove [find list=BlackList address=192.168.1.15]`
+3. Una vez enviado uno de estos dos comandos, llegará una notificación a Telegram con el mensaje correspondiente.
