@@ -1,0 +1,83 @@
+# Configuración de Telegram
+:local BotToken ""; # Cambia este valor por tu BotToken
+:local ChatID ""; # Cambia este valor por tu ChatID
+
+# Configurar el nombre de la lista a monitorear
+:local monitoredList "BlackList";  # Cambia este valor según la lista que quieras monitorear
+
+# Almacenar el estado previo de las IPs
+:local prevSet "";
+
+# Definir los emojis
+:local clipboardEmoji "\F0\9F\93\8B";   # ?? (Unicode: U+1F4CB)
+:local redCircleEmoji "\E2\AD\95";      # ? (Unicode: U+2B55)
+:local crossEmoji "\E2\9D\8C";          # ? (Unicode: U+274C)
+
+# Bucle infinito
+:while (true) do={
+    # Obtener las IPs actuales en la lista configurada
+    :local currIPs [:toarray [/ip firewall address-list find where list=$monitoredList]];
+    :local currSet "";
+    :foreach ip in=$currIPs do={
+        :local address [/ip firewall address-list get $ip address];
+        :set currSet ($currSet . $address . ",");
+    }
+
+    # Dividir las listas en arrays
+    :local prevSetArray [:toarray $prevSet];
+    :local currSetArray "";
+    :if ([:len $currSet] > 0) do={
+        :set currSetArray [:toarray [:pick $currSet 0 ([:len $currSet] - 1)]];  # Eliminar la última coma
+    }
+
+    # Detectar cambios: IPs agregadas
+    :local addedIPs "";
+    :foreach ip in=$currSetArray do={
+        :local found false;
+        :foreach prev in=$prevSetArray do={
+            :if ($ip = $prev) do={
+                :set found true;
+            }
+        }
+        :if (!$found) do={
+            :set addedIPs ($addedIPs . $ip . "%0A");
+        }
+    }
+
+    # Detectar cambios: IPs eliminadas
+    :local removedIPs "";
+    :foreach ip in=$prevSetArray do={
+        :local found false;
+        :foreach curr in=$currSetArray do={
+            :if ($ip = $curr) do={
+                :set found true;
+            }
+        }
+        :if (!$found) do={
+            :set removedIPs ($removedIPs . $ip . "%0A");
+        }
+    }
+
+    # Enviar mensaje con los cambios si los hay
+    :if ($prevSet != $currSet) do={
+        # Enviar mensaje indicando si se añadieron IPs
+        :if ([:len $addedIPs] > 0) do={
+            :local addedMessage ("$redCircleEmoji IPs agregadas a la lista $monitoredList:%0A" . $addedIPs);
+            /tool fetch url=("https://api.telegram.org/bot" . $BotToken . "/sendMessage?chat_id=" . $ChatID . "&text=" . $addedMessage) keep-result=no;
+            :log info "Mensaje enviado a Telegram: $addedMessage";
+        }
+
+        # Enviar mensaje indicando si se eliminaron IPs
+        :if ([:len $removedIPs] > 0) do={
+            :local removedMessage ("$crossEmoji IPs eliminadas de la lista $monitoredList:%0A" . $removedIPs);
+            /tool fetch url=("https://api.telegram.org/bot" . $BotToken . "/sendMessage?chat_id=" . $ChatID . "&text=" . $removedMessage) keep-result=no;
+            :log info "Mensaje enviado a Telegram: $removedMessage";
+        }
+
+        # Actualizar la lista previa
+        :set prevSet $currSet;
+    }
+
+    # Esperar 5 segundos antes de verificar nuevamente
+    :delay 5s;
+}
