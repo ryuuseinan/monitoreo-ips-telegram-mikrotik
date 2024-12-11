@@ -101,13 +101,13 @@ Para obtener el `ChatID` de tu chat en Telegram, sigue estos pasos:
 2. Crea un nuevo script con el siguiente comando:
 
 ```bash
-/system script add name=SendTelegramMessage source={
-  :local BotToken "7832338145:AAEYKke8t74yIE5MezxKYgxTF4bl-MYV14s"
-  :local ChatID "796083508"
+/system script add name=script source={
+  :local BotToken ""
+  :local ChatID ""
   :local Message "Mensaje de prueba desde MikroTik"
   /tool fetch url=("https://api.telegram.org/bot" . $BotToken . "/sendMessage%3Fchat_id=" . $ChatID . "&text=" . $Message) keep-result=no
 }
 ```
 ### 4. Ejecutar el script
-1. Para ejecutar el script simplemente abre una terminal y escribe `/system script run SendTelegramMessage`
-
+1. Para ejecutar el script simplemente abre una terminal y escribe `/system script run script`
+2. Para agregar una IP al firewall, abre una terminar y escribe `/ip firewall address-list add list=BlackList address=192.168.1.15` y para eliminar `/ip firewall address-list remove [find list=BlackList address=192.168.1.15]`, una vez enviado uno de estos dos comandos, llegará una notificación a Telegram con el mensaje correspondiente.
