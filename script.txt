@@ -1,8 +1,6 @@
 # Configuración de Telegram
 :local BotToken ""; # Cambia este valor por tu BotToken
 :local ChatID ""; # Cambia este valor por tu ChatID
-
-# Configurar el nombre de la lista a monitorear
 :local monitoredList "BlackList";  # Cambia este valor según la lista que quieras monitorear
 
 # Almacenar el estado previo de las IPs
