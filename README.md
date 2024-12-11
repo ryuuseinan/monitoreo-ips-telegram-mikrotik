@@ -1,4 +1,4 @@
-# Monitoreo de IPs de firewall de router Mikrotik con integración de Bot de Telegram
+# Monitoreo de IPs de firewall de dispositivo Mikrotik con integración de Bot de Telegram
 
 ## Configuración Inicial de MikroTik después de una Instalación Nueva
 
@@ -6,7 +6,7 @@ Este tutorial detalla cómo configurar una dirección IP en un MikroTik recién 
 
 ## Requisitos
 - **WinBox** instalado en tu computadora.
-- Acceso físico o de red al dispositivo MikroTik.
+- Acceso físico de red o desde una máquina virtual al dispositivo MikroTik.
 
 ---
 
